@@ -159,9 +159,20 @@ def get_vendor(category: str, method: str = None) -> str:
     # Check tool-level configuration first (if method provided)
     if method:
         tool_vendors = config.get("tool_vendors", {})
+        # {
+        #     # Example: "get_stock_data": "alpha_vantage",  # Override category default
+        # }
         if method in tool_vendors:
             return tool_vendors[method]
 
+    # "data_vendors": {
+    #     "core_stock_apis": "yfinance",  # Options: alpha_vantage, yfinance
+    #     "technical_indicators": "yfinance",  # Options: alpha_vantage, yfinance
+    #     "fundamental_data": "yfinance",  # Options: alpha_vantage, yfinance
+    #     "news_data": "yfinance",  # Options: alpha_vantage, yfinance
+    #     "macro_data": "fred",  # Options: fred (needs FRED_API_KEY)
+    #     "prediction_markets": "polymarket",  # Options: polymarket (keyless)
+    # },
     # Fall back to category-level configuration
     return config.get("data_vendors", {}).get(category, "default")
 
