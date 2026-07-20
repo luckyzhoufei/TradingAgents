@@ -131,7 +131,7 @@ def build_instrument_context(
     classification are injected so agents anchor to the real company rather
     than pattern-matching the price chart to a wrong one (#814).
     """
-    is_crypto = asset_type == "crypto"
+    is_crypto = asset_type == "crypto"  # 加密货币
     instrument_label = "asset" if is_crypto else "instrument"
     context = (
         f"The {instrument_label} to analyze is `{ticker}`. "

@@ -50,6 +50,7 @@ from tradingagents.graph.analyst_execution import (
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.reporting import write_report_tree
 
+print("============after import====================")
 console = Console()
 
 app = typer.Typer(
@@ -482,6 +483,7 @@ def update_display(layout, spinner_text=None, stats_handler=None, start_time=Non
 def get_user_selections():
     """Get all user selections before starting the analysis display."""
     # Display ASCII art welcome message
+    print("=======get user selections==========")
     with open(Path(__file__).parent / "static" / "welcome.txt", encoding="utf-8") as f:
         welcome_ascii = f.read()
 
@@ -990,6 +992,21 @@ def _build_run_config(selections: dict, checkpoint: bool | None) -> dict:
 
 def run_analysis(checkpoint: bool | None = None):
     # First get all user selections
+    # {
+    #     "ticker": selected_ticker,
+    #     "asset_type": asset_type.value,
+    #     "analysis_date": analysis_date,
+    #     "analysts": selected_analysts,
+    #     "research_depth": selected_research_depth,
+    #     "llm_provider": selected_llm_provider.lower(),
+    #     "backend_url": backend_url,
+    #     "shallow_thinker": selected_shallow_thinker,
+    #     "deep_thinker": selected_deep_thinker,
+    #     "google_thinking_level": thinking_level,
+    #     "openai_reasoning_effort": reasoning_effort,
+    #     "anthropic_effort": anthropic_effort,
+    #     "output_language": output_language,
+    # }
     selections = get_user_selections()
 
     config = _build_run_config(selections, checkpoint)
@@ -998,6 +1015,12 @@ def run_analysis(checkpoint: bool | None = None):
     stats_handler = StatsCallbackHandler()
 
     # Normalize analyst selection to predefined order (selection is a 'set', order is fixed)
+    # ANALYST_ORDER = [
+    #     ("Market Analyst", AnalystType.MARKET),
+    #     ("Sentiment Analyst", AnalystType.SOCIAL),
+    #     ("News Analyst", AnalystType.NEWS),
+    #     ("Fundamentals Analyst", AnalystType.FUNDAMENTALS),
+    # ]
     selected_set = {analyst.value for analyst in selections["analysts"]}
     selected_analyst_keys = [a for a in ANALYST_ORDER if a in selected_set]
     analyst_execution_plan = build_analyst_execution_plan(selected_analyst_keys)
@@ -1289,4 +1312,5 @@ def analyze(
 
 
 if __name__ == "__main__":
+    print("========================after main=====================")
     app()

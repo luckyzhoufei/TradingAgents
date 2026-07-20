@@ -139,7 +139,7 @@ class TradingMemoryLog:
             ):
                 # Parse rating from the existing pending tag
                 fields = [f.strip() for f in tag_line[1:-1].split("|")]
-                rating = fields[2]
+                rating = fields[2]  # BUY SELL HOLD
                 new_tag = (
                     f"[{trade_date} | {ticker} | {rating}"
                     f" | {raw_pct} | {alpha_pct} | {holding_days}d]"
